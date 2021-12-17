@@ -1,4 +1,4 @@
-# Casino App Views (Blueprints).
+# Casino App Games Views (Blueprints).
 
 # Importing.
 
@@ -15,14 +15,9 @@ def register_blueprints(app: Flask) -> NoReturn:
     :param app: Flask app.
     """
 
-    # Importing submodules to register their blueprints.
-    from . import games
-
     # Importing views blueprints.
-    from .root import bp_root
+    from .dice import bp_game_dice
 
     # Registering views blueprints.
-    app.register_blueprint(bp_root)
+    app.register_blueprint(bp_game_dice)
 
-    # Registering submodules blueprints.
-    games.register_blueprints(app)
