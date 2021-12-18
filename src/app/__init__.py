@@ -5,9 +5,13 @@
 # Flask core.
 from flask import Flask
 from flask_restful import Api
+from flask_sqlalchemy import SQLAlchemy
 
 # Type hints.
 from typing import Optional, NoReturn
+
+# Default app fields.
+database = SQLAlchemy()
 
 
 def create(name: Optional[str] = None) -> Flask:
@@ -30,6 +34,15 @@ def create(name: Optional[str] = None) -> Flask:
         # Registering.
         views.register_blueprints(_app, _api)
 
+    def _configure_config(_app: Flask) -> NoReturn:
+        """ Confgures app. """
+
+        # SQL Alchemy.
+        _app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+    def _configure_database(_app: Flask) -> NoReturn:
+        pass
+
     # Process name parameter.
     name = name if name else __name__
 
@@ -39,7 +52,16 @@ def create(name: Optional[str] = None) -> Flask:
     # Create API.
     api = Api(app)
 
+    # Initialise database application.
+    database.init_app(app)
+
     # Configure.
+
+    # Config.
+    _configure_config(app)
+
+    # Database.
+    _configure_database(app)
 
     # Blueprints.
     _register_blueprints(app, api)
