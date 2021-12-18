@@ -5,7 +5,6 @@
 # Flask.
 from flask import Blueprint, render_template
 
-
 # Blueprint.
 bp_games = Blueprint(name="games", import_name=__name__, url_prefix="/games/")
 
