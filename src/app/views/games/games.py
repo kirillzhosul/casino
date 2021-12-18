@@ -5,6 +5,7 @@
 # Flask.
 from flask import Blueprint, Response, render_template, request, jsonify
 from flask_restful import reqparse
+from flask_login import current_user
 
 # Random.
 from random import randint
@@ -117,4 +118,5 @@ def dice() -> Union[str, Response, Tuple[Response, int]]:
         })
 
     # Returning response.
-    return render_template("/games/dice/dice.index.html.jinja")
+    return render_template("/games/dice/dice.index.html.jinja",
+                           current_user=current_user)

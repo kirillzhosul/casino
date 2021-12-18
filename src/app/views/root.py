@@ -4,7 +4,7 @@
 
 # Flask.
 from flask import Blueprint, render_template
-
+from flask_login import current_user
 
 # Blueprint.
 bp_root = Blueprint(name="root", import_name=__name__, url_prefix="/")
@@ -18,4 +18,5 @@ def index() -> str:
     """
 
     # Returning response.
-    return render_template("/root/root.index.html.jinja")
+    return render_template("/root/root.index.html.jinja",
+                           current_user=current_user)
