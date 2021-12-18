@@ -14,7 +14,7 @@ from typing import Optional, NoReturn
 import os.path
 
 # Default app fields.
-database = SQLAlchemy()
+db = SQLAlchemy()
 
 
 def create(name: Optional[str] = None) -> Flask:
@@ -50,8 +50,11 @@ def create(name: Optional[str] = None) -> Flask:
     def _configure_database(_app: Flask) -> NoReturn:
         """ Configures database. """
 
+        # Importing models.
+        from .database.models.user import User
+
         # Initialise database application.
-        database.init_app(_app)
+        db.init_app(_app)
 
         # Path to the database.
         database_path = os.path.join(os.path.abspath(os.path.dirname(__file__)),
@@ -61,7 +64,7 @@ def create(name: Optional[str] = None) -> Flask:
             # If no database file.
 
             # Creating.
-            database.create_all(app=_app)
+            db.create_all(app=_app)
 
     # Process name parameter.
     name = name if name else __name__
