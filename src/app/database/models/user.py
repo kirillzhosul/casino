@@ -3,6 +3,9 @@
 # Importing.
 
 # Database object.
+import password as password
+import username as username
+
 from ... import db
 
 
@@ -17,3 +20,16 @@ class User(db.Model):
 
     # Password to login.
     password = db.Column(db.String, nullable=False)
+
+    # User balance.
+    balance = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, password: str, username: str = "user"):
+        """ Constructor. """
+
+        # Login information.
+        self.username = username
+        self.password = password
+
+        # Other.
+        self.balance = 0
