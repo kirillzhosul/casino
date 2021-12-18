@@ -11,31 +11,36 @@
     <h1>Dice</h1>
     <p>You should guess number between 0 and 1000000.</p>
 
-    <div class="dice-game-bet-information-preview">
+    <div id="dice-game-bet-information-preview">
         <big id="dice-game-bet-potential-win-size" class="fs-2 border-bottom"></big><br>
         <small class="text-muted">Potential win size</small>
     </div>
     <br>
     <div class="row">
-        <div class="dice-game-bet-percent col">
+        <div id="dice-game-bet-percent" class="col">
             Chance to win <br>
             <input id="dice-game-bet-percent-input" class="form-control" type="number" min="1" max="95" step="1" oninput="diceBetPercentUpdateInput(this.value)"><br>
         </div>
-        <div class="dice-game-bet-size col">
+        <div id="dice-game-bet-size" class="col">
             Bet size<br>
             <input id="dice-game-bet-size-input" class="form-control" type="number" min="1" value="1" max="" placeholder="Size" oninput="diceBetSizeUpdateInput(this.value)">
         </div>
     </div>
-    <div class="dice-game-bet-buttons row">
+    <div id="dice-game-bet-buttons" class="row">
         <div class="col">
             <output id="dice-game-bet-range-min" class="text-muted"></output>
-           <input id="dice-game-bet-button-min" class="form-control" type="button" value="Less">
+           <input id="dice-game-bet-button-min" class="form-control" type="button" value="Min" onclick="diceBetPlace(`min`)">
         </div>
         <div class="col">
             <output id="dice-game-bet-range-max" class="text-muted"></output>
-            <input id="dice-game-bet-button-max" class="form-control" type="button" value="More">
+            <input id="dice-game-bet-button-max" class="form-control" type="button" value="Max" onclick="diceBetPlace(`max`)">
         </div>
     </div>
+    <br>
+    <div class="border-bottom"></div>
+    <span class="fs-4" id="dice-game-bet-results">
+
+    </span>
 </div>
 
 {%endblock %}

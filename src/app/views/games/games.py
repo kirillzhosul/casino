@@ -82,12 +82,14 @@ def dice() -> Union[str, Response, Tuple[Response, int]]:
                 bet_required_threshold_max = bet_value_range
                 bet_required_threshold_min = bet_required_threshold_max - bet_required_threshold_difference
 
+            # Get total win size.
+            bet_win_size = (100 / bet_percent * bet_size)
+
             # Getting random bet value.
             bet_value = randint(0, bet_value_range)
 
             # Bet result (win or fail).
             bet_result = bet_required_threshold_min < bet_value < bet_required_threshold_max
-
         else:
             # Not found.
 
@@ -105,6 +107,7 @@ def dice() -> Union[str, Response, Tuple[Response, int]]:
             },
             "bet_response": {
                 "bet_value": bet_value,
+                "bet_win_size": bet_win_size,
                 "bet_required_threshold": {
                     "min": bet_required_threshold_min,
                     "max": bet_required_threshold_max

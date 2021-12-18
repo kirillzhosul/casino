@@ -70,6 +70,39 @@ function diceBetRangesUpdate(){
     document.getElementById("dice-game-bet-range-max").innerText = (betRange - betRequiredThresholdDifference).toString() + " - " + betRange.toString();
 }
 
+function diceBetPlace(type){
+    // Places bet, by sending request and showing result.
+
+    // Get values.
+    let betPercent = parseInt(document.getElementById("dice-game-bet-percent-input").value);
+    let betSize = parseInt(document.getElementById("dice-game-bet-size-input").value);
+
+    // Create url.
+    let url = "/games/dice/?bet_size=" + betSize.toString() + "&bet_percent=" + betPercent.toString() + "&&bet_type=" + type.toString();
+
+    // POST.
+    $.ajax({
+      type: "POST", url: url,
+      success: function(data){
+        if ("bet_response" in data && "bet_result" in data["bet_response"]){
+            let betResult = data["bet_response"]["bet_result"];
+            let betResults = document.getElementById("dice-game-bet-results");
+            if (betResult){
+                betResults.innerText = "Bet win!\n+ " + data["bet_response"]["bet_win_size"];
+                betResults.classList.remove("text-danger");
+                betResults.classList.add("text-success");
+            }else{
+                betResults.innerText = "Bet lose!\n- " + data["bet_arguments"]["bet_size"];
+                betResults.classList.remove("text-success");
+                betResults.classList.add("text-danger");
+            }
+            return;
+        }
+
+        alert("Failed to place bet! Invalid response data!");
+      },
+    });
+}
 window.addEventListener("load", function () {
     // Page is loaded.
 
