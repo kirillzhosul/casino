@@ -1,0 +1,71 @@
+<!-- Casino Website. -->
+<!-- Base Template. -->
+<!-- Author: Kirill Zhosul. -->
+
+<!doctype html>
+<html>
+    <head>
+        <!-- Title block start. -->
+        <title>{% block title %}Welcome{% endblock %} | Casino</title>
+        <!-- Title block end. -->
+
+        <!-- Head block start. -->
+        {% block head %} {% endblock %}
+        <!-- Head block end. -->
+
+        <!-- Meta block start. -->
+        <meta charset="utf-8">
+        <meta name="author" content="Kirill Zhosul">
+        {% block meta %} {% endblock %}
+        <!-- Meta block end. -->
+
+        <!-- Includes block start. -->
+        <!-- CSS. -->
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/base.css') }}">
+        <!-- JavaScript. -->
+        <script type=text/javascript src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        <!-- Favicon. -->
+        <link rel="shortcut icon" href="{{ url_for('static', filename='ico/favicon.ico') }}">
+        <!-- External -->
+        {% block include %} {% endblock %}
+        <!-- Includes block end. -->
+    </head>
+    <body>
+        <div class="container">
+            <!-- Page header start. -->
+            <header class="header">
+                <big>Casino</big> |
+                <a href="{{ url_for('root.index') }}">Index</a> |
+                <a href="{{ url_for('game_dice.index') }}">Dice</a>
+            </header>
+            <!-- Page header end. -->
+
+
+            <!-- Errors start. -->
+            {% with flashed_messages = get_flashed_messages(with_categories=False) %}
+                {% if flashed_messages %}
+                    {% for flahed_mesage in flashed_messages %}
+                        <p class="flashed-message">
+                            {{ flashed_message }}
+                        </p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <!-- Errors end. -->
+
+            <!-- Body block start. -->
+            {% block body %}
+
+            {% endblock %}
+            <!-- Body block end. -->
+
+            <!-- Page footer start. -->
+            <footer class="footer">
+                <!-- Author reference. -->
+                &copy; <a href=https://kirillzhosul.github.io>Kirill Zhosul</a>
+            </footer>
+            <!-- Page footer end. -->
+        </div>
+    </body>
+</html>
+

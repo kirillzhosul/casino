@@ -3,7 +3,7 @@
 # Importing.
 
 # Flask.
-from flask import Blueprint, Response
+from flask import Blueprint, render_template
 
 
 # Blueprint.
@@ -11,11 +11,11 @@ bp_game_dice = Blueprint(name="game_dice", import_name=__name__, url_prefix="/ga
 
 
 @bp_game_dice.route("/", methods=["GET"])
-def game_dice_index() -> Response:
+def index() -> str:
     """
     Dice game index page route.
     :return: Page.
     """
 
     # Returning response.
-    return Response("Dice game!")
+    return render_template("/games/dice/dice.index.html.jinja")
