@@ -30,7 +30,7 @@ def dice() -> Union[str, Response, Tuple[Response, int]]:
     :return: Page.
     """
 
-    if request.method == "GET":
+    if request.method == "POST":
         # If API request.
 
         # Get arguments
@@ -40,7 +40,6 @@ def dice() -> Union[str, Response, Tuple[Response, int]]:
         bet_size = arguments["bet_size"]
         bet_percent = arguments["bet_percent"]
         bet_type = arguments["bet_type"]
-
 
         if bet_size is None or bet_percent is None or bet_type is None:
             # If one of the arguemnts is not pased.

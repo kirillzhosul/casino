@@ -1,5 +1,35 @@
 {% extends "base.html.jinja" %}
 {% block title %} Dice {%endblock %}
+
+{% block include %}
+<script src="{{ url_for('static', filename='js/games/dice.js') }}"></script>
+{% endblock %}
+
 {% block main %}
-Dice game.
+
+<div class="dice-game-wrapper container">
+    <h1 class="border-bottom">Dice</h1>
+    <div class="row">
+        <div class="dice-game-bet-percent col">
+            Chance to win <br>
+            <input id="dice-game-bet-percent-input" class="form-control" type="number" min="1" max="95" step="1" oninput="diceBetPercentUpdateInput(this.value)"><br>
+        </div>
+
+        <div class="dice-game-bet-size col">
+            Bet size<br>
+            <input id="dice-game-bet-size-input" class="form-control" type="number" min="1" value="1" max="" placeholder="Size" oninput="diceBetSizeUpdateInput(this.value)">
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="dice-game-bet-information-preview">
+            <big id="dice-game-bet-potential-win-size" class="fs-4"></big>
+            <br>
+            <small class="border-bottom">
+                Potential win size
+            </small>
+        </div>
+    </div>
+</div>
+
 {%endblock %}
