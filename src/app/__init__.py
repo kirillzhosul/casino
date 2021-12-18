@@ -6,6 +6,7 @@
 from flask import Flask
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 # Type hints.
 from typing import Optional, NoReturn
@@ -15,6 +16,7 @@ import os.path
 
 # Default app fields.
 db = SQLAlchemy()
+login_manager = LoginManager()
 
 
 def create(name: Optional[str] = None) -> Flask:
@@ -24,21 +26,26 @@ def create(name: Optional[str] = None) -> Flask:
     :return: Flask app instance.
     """
 
-    def _register_blueprints(_app: Flask, _api: Api) -> NoReturn:
+    def _register_blueprints(_app: Flask) -> NoReturn:
         """
         Registers blueprints.
         :param _app: App (Can be ommitted).
-        :param _api: Flask RESTful API (Can be ommitted).
         """
+
+        # Create API.
+        api = Api(app)
 
         # Importing views.
         from . import views
 
         # Registering.
-        views.register_blueprints(_app, _api)
+        views.register_blueprints(_app, api)
 
     def _configure_config(_app: Flask) -> NoReturn:
         """ Confgures app. """
+
+        # Security.
+        app.config["SECRET_KEY"] = "*FPHa(;LE]OKT,spwb>lHJ{J]dAs>%"
 
         # Database.
         _app.config["SQLALCHEMY_DATABASE_FILENAME"] = "database\\database.db"
@@ -46,6 +53,26 @@ def create(name: Optional[str] = None) -> Flask:
         _app.config["SQLALCHEMY_DATABASE_URI"] = \
             f"sqlite:///" \
             f"{os.path.join(os.path.abspath(os.path.dirname(__file__)), _app.config['SQLALCHEMY_DATABASE_FILENAME'])}"
+
+    def _configure_login_manager(_app: Flask) -> NoReturn:
+        """ Configures login manager. """
+
+        # Importing user database model.
+        from .database.models.user import User
+
+        # Initialise login manager.
+        login_manager.init_app(_app)
+
+        @login_manager.user_loader
+        def _login_manager_load_user(user_id: int) -> Optional[User]:
+            """
+            Loads user from database.
+            :param user_id: User id to load.
+            :return: User or None
+            """
+
+            # Return.
+            return User.query.get(int(user_id))
 
     def _configure_database(_app: Flask) -> NoReturn:
         """ Configures database. """
@@ -72,9 +99,6 @@ def create(name: Optional[str] = None) -> Flask:
     # Create app.
     app = Flask(name)
 
-    # Create API.
-    api = Api(app)
-
     # Configure.
 
     # Config.
@@ -83,8 +107,11 @@ def create(name: Optional[str] = None) -> Flask:
     # Database.
     _configure_database(app)
 
+    # Login manager.
+    _configure_login_manager(app)
+
     # Blueprints.
-    _register_blueprints(app, api)
+    _register_blueprints(app)
 
     # Return app instance.
     return app
