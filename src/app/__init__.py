@@ -10,6 +10,9 @@ from flask_sqlalchemy import SQLAlchemy
 # Type hints.
 from typing import Optional, NoReturn
 
+# Database.
+import os.path
+
 # Default app fields.
 database = SQLAlchemy()
 
@@ -37,11 +40,28 @@ def create(name: Optional[str] = None) -> Flask:
     def _configure_config(_app: Flask) -> NoReturn:
         """ Confgures app. """
 
-        # SQL Alchemy.
+        # Database.
+        _app.config["SQLALCHEMY_DATABASE_FILENAME"] = "database\\database.db"
         _app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+        _app.config["SQLALCHEMY_DATABASE_URI"] = \
+            f"sqlite:///" \
+            f"{os.path.join(os.path.abspath(os.path.dirname(__file__)), _app.config['SQLALCHEMY_DATABASE_FILENAME'])}"
 
     def _configure_database(_app: Flask) -> NoReturn:
-        pass
+        """ Configures database. """
+
+        # Initialise database application.
+        database.init_app(_app)
+
+        # Path to the database.
+        database_path = os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                                     _app.config["SQLALCHEMY_DATABASE_FILENAME"])
+
+        if not os.path.exists(database_path):
+            # If no database file.
+
+            # Creating.
+            database.create_all(app=_app)
 
     # Process name parameter.
     name = name if name else __name__
@@ -51,9 +71,6 @@ def create(name: Optional[str] = None) -> Flask:
 
     # Create API.
     api = Api(app)
-
-    # Initialise database application.
-    database.init_app(app)
 
     # Configure.
 
