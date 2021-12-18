@@ -13,6 +13,9 @@ function diceBetPercentUpdateInput(value) {
 
     // Re-update win size.
     diceBetPotentialWinSizeUpdate();
+
+    // Ranges.
+    diceBetRangesUpdate();
 }
 
 function diceBetSizeUpdateInput(value){
@@ -30,6 +33,9 @@ function diceBetSizeUpdateInput(value){
 
     // Re-update win size.
     diceBetPotentialWinSizeUpdate();
+
+    // Ranges.
+    diceBetRangesUpdate();
 }
 
 function diceBetPotentialWinSizeUpdate(){
@@ -47,6 +53,23 @@ function diceBetPotentialWinSizeUpdate(){
     document.getElementById("dice-game-bet-potential-win-size").innerText = winSize;
 }
 
+function diceBetRangesUpdate(){
+    // Updates bet ranges.
+
+    // Get values.
+    let betPercent = parseInt(document.getElementById("dice-game-bet-percent-input").value);
+
+    // Max range for the bet value.
+    let betRange = 1000000;
+
+    // Difference for threshold max and min calculation.
+    let betRequiredThresholdDifference = (betRange / 100) * betPercent
+
+    // Set.
+    document.getElementById("dice-game-bet-range-min").innerText = "0 - " + betRequiredThresholdDifference.toString();
+    document.getElementById("dice-game-bet-range-max").innerText = (betRange - betRequiredThresholdDifference).toString() + " - " + betRange.toString();
+}
+
 window.addEventListener("load", function () {
     // Page is loaded.
 
@@ -59,4 +82,7 @@ window.addEventListener("load", function () {
     }
     // Potential win size.
     diceBetPotentialWinSizeUpdate();
+
+    // Ranges.
+    diceBetRangesUpdate();
 })
