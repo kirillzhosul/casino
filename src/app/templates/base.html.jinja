@@ -46,8 +46,12 @@
                         <li><a href="{{ url_for('games.dice') }}" class="nav-link px-2 link-secondary">Dice game</a></li>
                     </ul>
                     <div class="col-md-3 text-end">
-                        <button type="button" class="btn btn-outline-primary me-2">Login</button>
-                        <button type="button" class="btn btn-primary">Sign-up</button>
+                        {% if current_user.is_authenticated %}
+                            Welcome, {{ current_user.username }}!
+                        {% else %}
+                            <button type="button" class="btn btn-outline-primary me-2">Login</button>
+                            <button type="button" class="btn btn-primary">Sign-up</button>
+                        {% endif %}
                     </div>
                 </div>
             </div>
