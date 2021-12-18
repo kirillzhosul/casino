@@ -16,8 +16,8 @@ def register_blueprints(app: Flask) -> NoReturn:
     """
 
     # Importing views blueprints.
-    from .dice import bp_game_dice
+    from .games import bp_games
 
     # Registering views blueprints.
-    app.register_blueprint(bp_game_dice)
+    app.register_blueprint(bp_games)
 
