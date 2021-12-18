@@ -3,7 +3,7 @@
 <!-- Author: Kirill Zhosul. -->
 
 <!doctype html>
-<html>
+<html lang="en">
     <head>
         <!-- Title block start. -->
         <title>{% block title %}Welcome{% endblock %} | Casino</title>
@@ -16,53 +16,74 @@
         <!-- Meta block start. -->
         <meta charset="utf-8">
         <meta name="author" content="Kirill Zhosul">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         {% block meta %} {% endblock %}
         <!-- Meta block end. -->
 
         <!-- Includes block start. -->
         <!-- CSS. -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/base.css') }}">
         <!-- JavaScript. -->
         <script type=text/javascript src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <!-- Favicon. -->
         <link rel="shortcut icon" href="{{ url_for('static', filename='ico/favicon.ico') }}">
         <!-- External -->
         {% block include %} {% endblock %}
         <!-- Includes block end. -->
     </head>
-    <body>
-        <div class="container">
+    <body class="d-flex h-100 text-center">
+        <div class="cover-container d-flex w-100 h-100 mx-auto flex-column">
             <!-- Page header start. -->
-            <header class="header">
-                <big>Casino</big> |
-                <a href="{{ url_for('root.index') }}">Index</a> |
-                <a href="{{ url_for('game_dice.index') }}">Dice</a>
-            </header>
+            <div class="header navbar-fixed-top mb-auto">
+                <div class="d-flex flex-wrap align-items-center justify-content-center py-3 border-bottom">
+                    <a class="fs-4 d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none" href="{{ url_for('root.index') }}">
+                        Casino
+                    </a>
+                    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                        <li><a href="{{ url_for('root.index') }}" class="nav-link px-2 link-secondary">Home</a></li>
+                        <li><a href="{{ url_for('game_dice.index') }}" class="nav-link px-2 link-secondary">Dice game</a></li>
+                    </ul>
+                    <div class="col-md-3 text-end">
+                        <button type="button" class="btn btn-outline-primary me-2">Login</button>
+                        <button type="button" class="btn btn-primary">Sign-up</button>
+                    </div>
+                </div>
+            </div>
             <!-- Page header end. -->
 
             <!-- Errors start. -->
-            {% with flashed_messages = get_flashed_messages(with_categories=False) %}
-                {% if flashed_messages %}
-                    {% for flahed_mesage in flashed_messages %}
-                        <p class="flashed-message">
-                            {{ flashed_message }}
-                        </p>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
+            <div class="flashed_messages">
+                {% with flashed_messages = get_flashed_messages(with_categories=False) %}
+                    {% if flashed_messages %}
+                        {% for flahed_mesage in flashed_messages %}
+                            <p class="flashed-message">
+                                {{ flashed_message }}
+                            </p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
             <!-- Errors end. -->
 
             <!-- Body block start. -->
-            {% block body %}
+            <div style="min-height: 100vh; height: 100vh;">
+            <div class="col-xs-1 text-center d-flex justify-content-center text-center" style="height: 100%">
+                {% block main %}
 
-            {% endblock %}
+                {% endblock %}
+            </div></div>
             <!-- Body block end. -->
 
             <!-- Page footer start. -->
-            <footer class="footer">
+            <div class="footer fixed-bottom mt-auto">
+                <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                  <!-- <li class="nav-item"><a href="{{ url_for('root.index') }}" class="nav-link px-2 text-muted">Homepage</a></li> -->
+                </ul>
                 <!-- Author reference. -->
-                &copy; <a href=https://kirillzhosul.github.io>Kirill Zhosul</a>
-            </footer>
+                <p class="text-center text-muted">&copy; 2021 <a href=https://kirillzhosul.github.io>Kirill Zhosul</a></p>
+            </div>
             <!-- Page footer end. -->
         </div>
     </body>
