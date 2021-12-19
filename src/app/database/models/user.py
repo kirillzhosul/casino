@@ -3,9 +3,6 @@
 # Importing.
 
 # Database object.
-import password as password
-import username as username
-
 from ... import db
 
 
