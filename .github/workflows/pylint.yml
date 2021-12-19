@@ -20,9 +20,4 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint "src/app.py" --exit-zero
-        pylint "src/__init__.py" --exit-zero
-        pylint "src/views/__init__.py" --exit-zero
-        pylint "src/views/games/__init__.py" --exit-zero
-        pylint "src/views/games/dice.py" --exit-zero
-        pylint "src/views/root.py" --exit-zero
+        pylint "src/" --exit-zero
