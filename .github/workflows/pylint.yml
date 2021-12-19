@@ -20,4 +20,9 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint `ls -R *.py`
+        pylint `src/app.py`
+        pylint `src/__init__.py`
+        pylint `src/views/__init__.py`
+        pylint `src/views/games/__init__.py`
+        pylint `src/views/games/dice.py`
+        pylint `src/views/root.py`
