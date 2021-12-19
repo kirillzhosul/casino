@@ -72,6 +72,10 @@ def dice() -> Union[str, Response, Tuple[Response, int]]:
             # Max range for the bet value.
             bet_value_range = 1_000_000
 
+            # Chance to lose bet.
+            # 0 To disable.
+            bet_cheating_lose_chance = 0
+
             # Difference for threshold max and min calculation.
             bet_required_threshold_difference = (bet_value_range / 100) * bet_percent
 
@@ -88,6 +92,15 @@ def dice() -> Union[str, Response, Tuple[Response, int]]:
 
             # Getting random bet value.
             bet_value = randint(0, bet_value_range)
+
+            if bet_cheating_lose_chance != 0 and randint(0, 100) < bet_cheating_lose_chance:
+                # If chance to lose.
+
+                # Recalculate with bet value not in given range.
+                if bet_type == "max":
+                    bet_value = randint(bet_required_threshold_max, bet_value_range)
+                else:  # elif bet_type == "min":
+                    bet_value = randint(0, bet_required_threshold_max - bet_required_threshold_difference)
 
             # Bet result (win or fail).
             bet_result = bet_required_threshold_min < bet_value < bet_required_threshold_max
