@@ -10,11 +10,10 @@ from flask_restful import Api
 from typing import NoReturn
 
 
-def register_blueprints(app: Flask, api: Api) -> NoReturn:
+def register_blueprints(app: Flask) -> NoReturn:
     """
     Registers blueprints for given application.
     :param app: Flask app.
-    :param api: Flask RESTful API.
     """
 
     # Importing submodules to register their blueprints.
@@ -27,4 +26,4 @@ def register_blueprints(app: Flask, api: Api) -> NoReturn:
     app.register_blueprint(bp_root)
 
     # Registering submodules blueprints.
-    games.register_blueprints(app, api)
+    games.register_blueprints(app)

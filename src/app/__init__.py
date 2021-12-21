@@ -32,14 +32,11 @@ def create(name: Optional[str] = None) -> Flask:
         :param _app: App (Can be ommitted).
         """
 
-        # Create API.
-        api = Api(app)
-
         # Importing views.
         from . import views
 
         # Registering.
-        views.register_blueprints(_app, api)
+        views.register_blueprints(_app)
 
     def _configure_config(_app: Flask) -> NoReturn:
         """ Confgures app. """
