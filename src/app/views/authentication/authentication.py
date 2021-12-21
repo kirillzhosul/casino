@@ -18,7 +18,7 @@ def login() -> str:
     """
 
     # Returning response.
-    return render_template("/authentication/login.index.html.jinja",
+    return render_template("/authentication/authentication.login.html.jinja",
                            current_user=current_user)
 
 
@@ -30,5 +30,5 @@ def signup() -> str:
     """
 
     # Returning response.
-    return render_template("/authentication/signup.index.html.jinja",
+    return render_template("/authentication/authentication.signup.html.jinja",
                            current_user=current_user)

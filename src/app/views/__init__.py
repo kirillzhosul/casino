@@ -18,6 +18,7 @@ def register_blueprints(app: Flask) -> NoReturn:
 
     # Importing submodules to register their blueprints.
     from . import games
+    from . import authentication
 
     # Importing views blueprints.
     from .root import bp_root
@@ -27,3 +28,4 @@ def register_blueprints(app: Flask) -> NoReturn:
 
     # Registering submodules blueprints.
     games.register_blueprints(app)
+    authentication.register_blueprints(app)

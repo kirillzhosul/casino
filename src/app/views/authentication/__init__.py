@@ -20,4 +20,4 @@ def register_blueprints(app: Flask) -> NoReturn:
     from .authentication import bp_authentication
 
     # Registering views blueprints.
-    app.register_blueprint(bp_games)
+    app.register_blueprint(bp_authentication)
