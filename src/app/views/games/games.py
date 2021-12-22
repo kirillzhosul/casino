@@ -23,6 +23,72 @@ dice_parser.add_argument("bet_size", type=int)
 dice_parser.add_argument("bet_percent", type=int)
 dice_parser.add_argument("bet_type", type=str)
 
+# Dice settings.
+
+# Max range for the bet value.
+DICE_BET_VALUE_RANGE = 1_000_000
+
+# Chance to lose bet.
+DICE_BET_CHEATING_LOSE_CHANCE = 0
+
+
+class DiceBetResult(object):
+    """ Dice game result container object. """
+
+    def __init__(self, result: bool, win_size: float, value: int, required_threshold: Tuple[int, int]):
+        # Constrcutor.
+
+        # Fields.
+        self.result = result
+        self.win_size = win_size
+        self.value = value
+        self.required_threshold = required_threshold
+
+
+def dice_calculate(bet_size: int, bet_percent: int, bet_type: str) -> DiceBetResult:
+    """
+    Calculates dice game
+    :param bet_size: Amount.
+    :param bet_percent: Percent.
+    :param bet_type: `min` or `max`
+    :return: DiceGameBetResult as result object container.
+    """
+
+    # Error check.
+    assert bet_type in ("min", "max"), "Invalid argument!"
+
+    # Difference for threshold max and min calculation.
+    bet_required_threshold_difference = (DICE_BET_VALUE_RANGE / 100) * bet_percent
+
+    # Getting random bet value.
+    bet_value = randint(0, DICE_BET_VALUE_RANGE)
+
+    # Get total win size.
+    bet_win_size = float(format(100 / bet_percent * bet_size, ".2f"))
+
+    # Getting max and minimim.
+    if bet_type == "max":
+        bet_required_threshold_max = bet_required_threshold_difference
+        bet_required_threshold_min = 0
+    else:
+        bet_required_threshold_max = DICE_BET_VALUE_RANGE
+        bet_required_threshold_min = bet_required_threshold_max - bet_required_threshold_difference
+
+    if DICE_BET_CHEATING_LOSE_CHANCE != 0 and randint(0, 100) < DICE_BET_CHEATING_LOSE_CHANCE:
+        # If chance to lose.
+
+        # Recalculate with bet value not in given range.
+        if bet_type == "max":
+            bet_value = randint(bet_required_threshold_max, DICE_BET_VALUE_RANGE)
+        else:
+            bet_value = randint(0, int(bet_required_threshold_max - bet_required_threshold_difference))
+
+    # Bet result (win or fail).
+    bet_result = bet_required_threshold_min < bet_value < bet_required_threshold_max
+
+    # Returning game result.
+    return DiceBetResult(bet_result, bet_win_size, bet_value, (bet_required_threshold_min, bet_required_threshold_max))
+
 
 @bp_games.route("/dice/", methods=["GET", "POST"])
 def dice() -> Union[str, Response, Tuple[Response, int]]:
@@ -69,41 +135,8 @@ def dice() -> Union[str, Response, Tuple[Response, int]]:
         if bet_type == "min" or bet_type == "max":
             # If valid bet type.
 
-            # Max range for the bet value.
-            bet_value_range = 1_000_000
-
-            # Chance to lose bet.
-            # 0 To disable.
-            bet_cheating_lose_chance = 0
-
-            # Difference for threshold max and min calculation.
-            bet_required_threshold_difference = (bet_value_range / 100) * bet_percent
-
-            # Getting max and minimim.
-            if bet_type == "max":
-                bet_required_threshold_max = bet_required_threshold_difference
-                bet_required_threshold_min = 0
-            else:  # elif bet_type == "min":
-                bet_required_threshold_max = bet_value_range
-                bet_required_threshold_min = bet_required_threshold_max - bet_required_threshold_difference
-
-            # Get total win size.
-            bet_win_size = float(format(100 / bet_percent * bet_size, ".2f"))
-
-            # Getting random bet value.
-            bet_value = randint(0, bet_value_range)
-
-            if bet_cheating_lose_chance != 0 and randint(0, 100) < bet_cheating_lose_chance:
-                # If chance to lose.
-
-                # Recalculate with bet value not in given range.
-                if bet_type == "max":
-                    bet_value = randint(bet_required_threshold_max, bet_value_range)
-                else:  # elif bet_type == "min":
-                    bet_value = randint(0, bet_required_threshold_max - bet_required_threshold_difference)
-
-            # Bet result (win or fail).
-            bet_result = bet_required_threshold_min < bet_value < bet_required_threshold_max
+            # Getting result.
+            bet_result = dice_calculate(bet_size, bet_percent, bet_type)
         else:
             # Not found.
 
@@ -120,13 +153,13 @@ def dice() -> Union[str, Response, Tuple[Response, int]]:
                 "bet_type": bet_type
             },
             "bet_response": {
-                "bet_value": bet_value,
-                "bet_win_size": bet_win_size,
+                "bet_value": bet_result.value,
+                "bet_win_size": bet_result.win_size,
                 "bet_required_threshold": {
-                    "min": bet_required_threshold_min,
-                    "max": bet_required_threshold_max
+                    "min": bet_result.required_threshold[0],
+                    "max": bet_result.required_threshold[1]
                 },
-                "bet_result": bet_result
+                "bet_result": bet_result.result
             },
         })
 
