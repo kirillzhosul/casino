@@ -132,18 +132,16 @@ def dice() -> Union[str, Response, Tuple[Response, int]]:
                 "error": "Invalid bet size! `bet_size` should be not less than 1."
             }), 400
 
-        if bet_type == "min" or bet_type == "max":
-            # If valid bet type.
-
-            # Getting result.
-            bet_result = dice_calculate(bet_size, bet_percent, bet_type)
-        else:
-            # Not found.
+        if not (bet_type == "min" or bet_type == "max"):
+            # If not valid bet type.
 
             # Error.
             return jsonify({
                 "error": "Invalid bet type! `bet_type` should be `min` or `max`."
             }), 400
+
+        # Getting result.
+        bet_result = dice_calculate(bet_size, bet_percent, bet_type)
 
         # Returning response.
         return jsonify({
