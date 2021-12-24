@@ -49,8 +49,10 @@
                         {% if current_user.is_authenticated %}
                             Welcome, {{ current_user.username }}!
                         {% else %}
-                            <a href="{{ url_for('authentication.login') }}" class="btn btn-outline-primary me-2">Login</a>
-                            <a href="{{ url_for('authentication.signup') }}" class="btn btn-primary">Sign-up</a>
+                            {% if request.url_rule.endpoint != "authentication.signup" and request.url_rule.endpoint != "authentication.login"%}
+                                <a href="{{ url_for('authentication.login') }}" class="btn btn-outline-primary me-2">Login</a>
+                                <a href="{{ url_for('authentication.signup') }}" class="btn btn-primary">Sign-up</a>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>
