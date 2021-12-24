@@ -1,5 +1,3 @@
-
-
 function signup(event){
     // Do signup submit.
 
