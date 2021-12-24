@@ -9,8 +9,30 @@
 {% block main %}
 <div class="container w-25 pt-5">
     <h1>Sign-Up</h1>
-    <form onsubmit="">
+    <p>Please create new account to continue using website with all features!</p>
+    <form onsubmit="signup(event)" class="pt-3">
+        <div class="container w-75">
+            <div class="row">
+                <div class="col">
+                    <input type="text" name="username" placeholder="Username" class="form-control">
+                </div>
+                <div class="col">
+                    <input type="text" name="mail" placeholder="Email" class="form-control">
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col">
+                    <input type="password" name="password" placeholder="Password" class="form-control">
+                </div>
+                <div class="col">
+                    <input type="password" name="password-verify" placeholder="Password Verify" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="container w-25 pt-3">
 
+            <input type="submit" class="btn btn-primary form-control" value="Sign-Up">
+        </div>
     </form>
 </div>
 {%endblock %}
