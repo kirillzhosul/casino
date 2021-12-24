@@ -5,21 +5,27 @@ function signup(event){
     event.preventDefault();
 
     // Getting all fields.
-    let signupUsername = document.getElementById("signup-username");
-    let signupMail = document.getElementById("signup-mail");
-    let signupPassword = document.getElementById("signup-password");
-    let signupPasswordVerfiy = document.getElementById("signup-password-verify");
+    let signupUsername = document.getElementById("signup-username").value;
+    let signupMail = document.getElementById("signup-mail").value;
+    let signupPassword = document.getElementById("signup-password").value;
+    let signupPasswordVerfiy = document.getElementById("signup-password-verify").value;
 
     $.ajax({
-        "type": "POST",
-        "url": "/authentication/signup",
+        type: "POST",
+        url: "/authentication/signup",
+        data: {
+            "username": signupUsername,
+            "mail": signupMail,
+            "password": signupPassword,
+            "passwordVerify": signupPasswordVerfiy
+        },
         success: function (data){
             if ("authentication" in data){
-                let authentication = data.authentication;
+                // If this is valid data.
 
                 // Get authentication details.
-                let status = authentication.status;
-                let message = authentication.message;
+                let status = data.authentication.status;
+                let message = data.authentication.message;
 
                 if (status){
                     // If success authentication.
