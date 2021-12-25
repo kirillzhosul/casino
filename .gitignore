@@ -1,4 +1,4 @@
-src/.idea
+.idea
 venv
 *.pyc
 src/app/database/database.db
