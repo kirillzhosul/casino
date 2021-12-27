@@ -1,0 +1,13 @@
+{% extends "base.html.jinja" %}
+
+{% block title %} Login {%endblock %}
+
+{% block include %}
+<script src="{{ url_for('static', filename='js/authentication/login.js') }}"></script>
+{% endblock %}
+
+{% block main %}
+<div class="container w-25 pt-5">
+    <h1>Login</h1>
+</div>
+{%endblock %}

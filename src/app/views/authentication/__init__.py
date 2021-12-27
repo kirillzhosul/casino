@@ -16,7 +16,7 @@ def register_blueprints(app: Flask) -> NoReturn:
     """
 
     # Importing views blueprints.
-    from .games import bp_games
+    from .authentication import bp_authentication
 
     # Registering views blueprints.
-    app.register_blueprint(bp_games)
+    app.register_blueprint(bp_authentication)

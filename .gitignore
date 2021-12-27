@@ -1,4 +1,8 @@
-src/.idea
+.idea
 venv
+.mypy_cache
+node_modules
+
+*.js
 *.pyc
 src/app/database/database.db
