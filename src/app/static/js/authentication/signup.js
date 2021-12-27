@@ -38,27 +38,37 @@ function signup(event){
     })
 }
 
-function signupError(message, name){
+function signupError(text, name){
     // Error signup.
 
-    // Message.
-    $("#ajax-message").html(
+    // Message
+    signupMessage(
         "<big class='text-danger'>Sorry, unexpected error occured!</big><br><b>"
-        + message +
+        + text +
         "</b><br><small class='text-muted'>"
         + name +
         "</small>"
-    ).show();
+    );
 }
 
 function signupSuccess(){
     // Successfully signup.
 
     // Messsage.
-    $("#ajax-message").html(
+    signupMessage(
         "<big class='text-success'>Successfully authenticated!</big><br><small class='text-muted'>you will be redirected...</small>"
-    ).show();
+    );
 
     // Go to root.
     window.location.href = "/";
+}
+
+function signupMessage(html){
+    // Show message.
+
+    // Message.
+    let message = $("#ajax-message");
+    message.html(html);
+    message.addClass("border")
+    message.show();
 }
