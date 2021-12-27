@@ -4,7 +4,6 @@
 
 # Flask class.
 from flask import Flask
-from flask_restful import Api
 
 # Type hints.
 from typing import NoReturn
