@@ -1,4 +1,6 @@
-# Casino App Root Views (Blueprint).
+"""
+Casino App Root Views (Blueprint).
+"""
 
 # Importing.
 

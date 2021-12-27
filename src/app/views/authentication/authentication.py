@@ -1,4 +1,6 @@
-# Casino App Authentication Views (Blueprint).
+"""
+Casino App Authentication Views (Blueprint).
+"""
 
 # Importing.
 

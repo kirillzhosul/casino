@@ -1,4 +1,6 @@
-# Casino App Dice Game Views (Blueprint).
+"""
+Casino App Dice Game Views (Blueprint).
+"""
 
 # Importing.
 

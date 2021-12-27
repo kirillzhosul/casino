@@ -1,4 +1,6 @@
-# Casino App Module.
+"""
+Casino App Module.
+"""
 
 # Importing.
 
@@ -43,18 +45,20 @@ def create(name: Optional[str] = None) -> Flask:
         # Security.
         app.config["SECRET_KEY"] = "*FPHa(;LE]OKT,spwb>lHJ{J]dAs>%"
 
+        # File path to the database file.
+        database_file_path = os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                                          _app.config["SQLALCHEMY_DATABASE_FILENAME"])
+
         # Database.
         _app.config["SQLALCHEMY_DATABASE_FILENAME"] = "database\\database.db"
         _app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-        _app.config["SQLALCHEMY_DATABASE_URI"] = \
-            f"sqlite:///" \
-            f"{os.path.join(os.path.abspath(os.path.dirname(__file__)), _app.config['SQLALCHEMY_DATABASE_FILENAME'])}"
+        _app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{database_file_path}"
 
     def _configure_login_manager(_app: Flask) -> NoReturn:
         """ Configures login manager. """
 
         # Importing user database model.
-        from .database.models.user import User
+        from .database.models.user import User  # pylint: disable=import-outside-toplevel, unused-import
 
         # Initialise login manager.
         login_manager.init_app(_app)

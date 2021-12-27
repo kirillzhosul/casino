@@ -1,4 +1,6 @@
-# Casino App Games Views (Blueprints).
+"""
+Casino App Games Views (Blueprints).
+"""
 
 # Importing.
 

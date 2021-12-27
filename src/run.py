@@ -1,13 +1,15 @@
-# Casino App Runner.
+"""
+Casino App Runner.
+"""
 
 # Importing.
-
-# Application.
-import app
 
 # System.
 import os
 import sys
+
+# Application.
+import app
 
 
 def typescript_compile():
