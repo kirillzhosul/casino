@@ -1,4 +1,7 @@
 .idea
 venv
+.mypy_cache
+node_modules
+
 *.pyc
 src/app/database/database.db
