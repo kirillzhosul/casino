@@ -104,9 +104,9 @@ def dice() -> Union[str, Response, Tuple[Response, int]]:
         arguments = dice_parser.parse_args(request)
 
         # Getting bet arguments.
-        bet_size = arguments["bet_size"]
-        bet_percent = arguments["bet_percent"]
-        bet_type = arguments["bet_type"]
+        bet_size = arguments.get("bet_size")
+        bet_percent = arguments.get("bet_percent")
+        bet_type = arguments.get("bet_type")
 
         if bet_size is None or bet_percent is None or bet_type is None:
             # If one of the arguemnts is not pased.

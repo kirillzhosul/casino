@@ -4,14 +4,16 @@ function signup(event){
     // Preventing reloading.
     event.preventDefault();
 
+    // Send data.
     $.ajax({
         type: "POST",
         url: "/authentication/signup",
+        dataType: 'json',
         data: {
-            "username": $("#signup-username").value,
-            "mail": $("#signup-mail").value,
-            "password": $("#signup-password").value,
-            "passwordConfirmation": $("#signup-password-confirmation").value
+            "username": $("#signup-username").val(),
+            "email": $("#signup-email").val(),
+            "password": $("#signup-password").val(),
+            "password_confirmation": $("#signup-password-confirmation").val()
         },
         success: function (data){
             if (!("authentication" in data)){
