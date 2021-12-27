@@ -60,8 +60,6 @@ def signup() -> Union[str, Response, Tuple[Response, int]]:
         # Parsing arguments.
         arguments = signup_parser.parse_args(request)
 
-        print(request.data)
-        print(arguments)
         # Arguments.
         signup_username = arguments.get("username")
         signup_email = arguments.get("email")
@@ -69,12 +67,20 @@ def signup() -> Union[str, Response, Tuple[Response, int]]:
         signup_password_confirmation = arguments.get("password_confirmation")
 
         if signup_username is None or signup_email is None or signup_password is None or signup_password_confirmation is None:
-            # If one of the arguemnts is not pased.
+            # If one of the arguemnts is not passed.
 
             # Error.
             return jsonify({
                 "error": "Invalid request arguments! "
                          "`username`, `email` or `password` or `password_confirmation` is not passed!"
+            }), 400
+
+        if signup_password != signup_password_confirmation:
+            # Not same passwords.
+
+            # Error.
+            return jsonify({
+                "error": "Password and its confirmation do not match!"
             }), 400
 
         # Boilerplate.

@@ -35,6 +35,11 @@ function signup(event){
         },
         error: function(xhr){
             // Error.
+            let json = JSON.parse(xhr.responseText);
+            if ("error" in json){
+                signupError(json["error"], "api-error");
+                return;
+            }
             signupError(xhr.statusText, "xhr-error");
         }
     })
