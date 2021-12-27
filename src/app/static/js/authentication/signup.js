@@ -11,7 +11,7 @@ function signup(event){
             "username": $("#signup-username").value,
             "mail": $("#signup-mail").value,
             "password": $("#signup-password").value,
-            "passwordVerify": $("#signup-password-verify").value
+            "passwordConfirmation": $("#signup-password-confirmation").value
         },
         success: function (data){
             if (!("authentication" in data)){
@@ -33,7 +33,7 @@ function signup(event){
         },
         error: function(xhr){
             // Error.
-            signupError(statusText, "xhr-error");
+            signupError(xhr.statusText, "xhr-error");
         }
     })
 }
